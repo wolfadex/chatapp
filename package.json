@@ -8,7 +8,8 @@
     "dev:bundle": "webpack --config webpack.client.js --watch",
     "dev:elm": "yarn elm:make && chokidar 'src/client/elm/**/*.elm' -c 'yarn elm:make'",
     "server:make": "webpack --config webpack.server.js",
-    "elm:make": "elm make src/client/elm/Main.elm --output build/public/elm.js"
+    "elm:make": "elm make src/client/elm/Main.elm --output build/public/elm.js",
+    "dev:build": "webpack --config webpack.client.js && yarn elm:make && webpack --config webpack.server.js && node build/main.js"
   },
   "dependencies": {
     "express": "4.16.3",
