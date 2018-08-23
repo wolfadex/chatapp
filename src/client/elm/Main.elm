@@ -269,7 +269,10 @@ update msg ({ userInput, chatLog, user, organizations } as model) =
             , createOrganization name
             )
         NewOrganizationFound ({ name } as organization) ->
-            ( { model | organizations = Dict.insert name organization organizations }
+            ( { model
+              | organizations = Dict.insert name organization organizations
+              , activeOrganization = Just organization
+              }
             , Cmd.none
             )
         SetActiveOrg organization ->
@@ -332,7 +335,7 @@ chatView : Model -> Html Msg
 chatView { chatLog, userInput, organizations, showNewOrgModal, newOrgName, activeOrganization } =
     Html.div [ Attr.class "app--logged-in" ]
              [ organizationsView organizations activeOrganization
-             , roomsView
+             , roomsView activeOrganization
              , currentChatView activeOrganization chatLog userInput
              , modalView showNewOrgModal ShowNewOrgModal "Create New Organization" (newOrgView newOrgName)
              ]
@@ -394,9 +397,49 @@ organizationView activeOrganization (id, ({ name } as organization)) =
                 ]
 
 
-roomsView : Html Msg
-roomsView =
-    Html.div [ Attr.class "app--loggedin__rooms" ] []
+roomsView : Maybe Organization -> Html Msg
+roomsView activeOrganization =
+    let
+        (channels, groups, active) = case activeOrganization of
+            Just { rooms } ->
+                List.foldl splitRoomsByType ([], [], True) (Dict.toList rooms)
+            Nothing ->
+                ([], [], False)
+    in
+        Html.div [ Attr.class "app--loggedin__rooms" ]
+                 [ Html.ul [ Attr.class "app--loggedin__rooms__channels" ]
+                           <| if active then
+                                  [ Html.li [] [ Html.text "Channels" ]
+                                  , Html.li [] [ Html.button [] [ Html.text "+" ] ]
+                                  ] ++ (List.map roomView channels)
+                              else
+                                  []
+                 , Html.ul [ Attr.class "app--loggedin__rooms__groups" ]
+                           <| if active then
+                                  [ Html.li [] [ Html.text "Direct Messages" ]
+                                  , Html.li [] [ Html.button [] [ Html.text "+" ] ]
+                                  ] ++ (List.map roomView groups)
+                              else
+                                  []
+                 ]
+
+
+splitRoomsByType : (String, Room) -> (List Room, List Room, Bool) -> (List Room, List Room, Bool)
+splitRoomsByType (name, room) (channels, groups, active) =
+    case room of
+        RChannel channel ->
+            (RChannel channel :: channels, groups, active)
+        RGroup group ->
+            (channels, RGroup group :: groups, active)
+
+
+roomView : Room -> Html Msg
+roomView room =
+    case room of
+        RChannel { name } ->
+            Html.li [] [ Html.text name ]
+        RGroup { name } ->
+            Html.li [] [ Html.text <| String.join ", " name ]
 
 
 currentChatView : Maybe Organization -> List Message -> ChatMessage -> Html Msg
