@@ -1,0 +1,27 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "author": "Wolfgang Schuster",
+  "license": "MIT",
+  "scripts": {
+    "dev:serve": "concurrently \"webpack --config webpack.server.js --watch\" \"nodemon --inspect build/main.js\"",
+    "dev:bundle": "webpack --config webpack.client.js --watch",
+    "dev:elm": "yarn elm:make && chokidar 'src/client/elm/**/*.elm' -c 'yarn elm:make'",
+    "server:make": "webpack --config webpack.server.js",
+    "elm:make": "elm make src/client/elm/Main.elm --output build/public/elm.js"
+  },
+  "dependencies": {
+    "express": "4.16.3",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.0.0-rc.2",
+    "@babel/preset-env": "7.0.0-rc.2",
+    "babel-loader": "8.0.0-beta.6",
+    "chokidar-cli": "^1.2.0",
+    "nodemon": "1.18.3",
+    "webpack": "4.17.1",
+    "webpack-cli": "3.1.0"
+  }
+}

@@ -1,0 +1,7 @@
+build/public/bundle.js
+build/public/elm.js
+build/main.js
+yarn-error.log
+
+node_modules
+elm-stuff

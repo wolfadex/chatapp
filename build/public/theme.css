@@ -1,0 +1,130 @@
+html {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  font-size: 1rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.modal-view {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-view__modal {
+  background-color: white;
+  display:flex;
+  flex-direction: column;
+  margin-top: 6rem;
+}
+
+.modal-view__modal__header {
+  height: 3rem;
+  display: flex;
+}
+
+.modal-view__modal__header__close-button {
+
+}
+
+.modal-view__modal__header__title {
+  flex: 1;
+}
+
+.modal-view__modal__body {
+  flex: 1;
+}
+
+.app--login {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.app--logging-in {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.app--logged-in {
+  display: flex;
+  height: 100%;
+}
+
+.app--loggedin__organizations {
+  border-right: 1px solid black;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 10rem;
+}
+
+.app--loggedin__organizations__organization {
+  align-items: center;
+  border-bottom: 1px solid black;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.active-org {
+  background-color: rgb(134, 68, 238);
+}
+
+.app--loggedin__rooms {
+  border-right: 1px solid black;
+  width: 10rem;
+}
+
+.app--loggedin__chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-log__message {
+
+}
+
+.message-box {
+  height: 8rem;
+  display: flex;
+}
+
+.message-box__input {
+  flex: 1;
+  font-size: 1.7rem;
+}
+
+.message-box__send-button {
+  width: 10rem;
+  cursor: pointer;
+  font-size: 2rem;
+}
